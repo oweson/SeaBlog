@@ -19,7 +19,7 @@ public class BackMenuController {
     @Autowired
     private MenuService menuService;
 
-    //后台菜单列表显示
+    /** 1 后台菜单列表显示*/
     @RequestMapping(value = "")
     public ModelAndView menuList() throws Exception {
         ModelAndView modelandview = new ModelAndView();
@@ -29,7 +29,7 @@ public class BackMenuController {
         return modelandview;
     }
 
-    //添加菜单内容提交
+    /** 2 添加菜单内容提交*/
     @RequestMapping(value = "/insertSubmit",method = RequestMethod.POST)
     public String insertMenuSubmit(Menu menu) throws Exception {
         menu.setMenuStatus(1);
@@ -38,7 +38,7 @@ public class BackMenuController {
         return "redirect:/admin/menu";
     }
 
-    //删除菜单内容
+    /** 3 删除菜单内容*/
     @RequestMapping(value = "/delete/{id}")
     public String deleteMenu(@PathVariable("id") Integer id) throws Exception {
 
@@ -46,13 +46,14 @@ public class BackMenuController {
         return "redirect:/admin/menu";
     }
 
-    //编辑菜单内容显示
+    /** 4 编辑菜单内容显示*/
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editMenuView(@PathVariable("id") Integer id) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-
+/**原本的页面的回显示*/
         MenuCustom menuCustom =  menuService.getMenuById(id);
         modelAndView.addObject("menuCustom",menuCustom);
+        /**右侧所有的页面的显示*/
 
         List<MenuCustom> menuCustomList = menuService.listMenu(null);
         modelAndView.addObject("menuCustomList",menuCustomList);
@@ -62,14 +63,14 @@ public class BackMenuController {
     }
 
 
-    //编辑菜单内容提交
+    /** 5 编辑菜单内容提交*/
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
     public String editMenuSubmit(Menu menu) throws Exception {
         menuService.updateMenu(menu);
         return "redirect:/admin/menu";
     }
 
-    //显示菜单内容
+    /** 6 显示菜单内容*/
     @RequestMapping(value = "/show/{id}",method = RequestMethod.POST)
     public void showMenu(@PathVariable("id") Integer id) throws Exception {
         Menu menu = new Menu();
@@ -78,11 +79,12 @@ public class BackMenuController {
         menuService.updateMenu(menu);
     }
 
-    //隐藏菜单内容
+    /** 7隐藏菜单内容*/
     @RequestMapping(value = "/hide/{id}",method = RequestMethod.POST)
     public void hideMenu(@PathVariable("id") Integer id) throws Exception {
         Menu menu = new Menu();
         menu.setMenuId(id);
+        /**有选择的更新，把menu的状态进行修改*/
         menu.setMenuStatus(0);
         menuService.updateMenu(menu);
     }

@@ -81,13 +81,13 @@ public class BackCommentController {
         articleService.updateCommentCount(article.getArticleId());
     }
 
-    //删除评论
+    /** 3 删除评论*/
     @RequestMapping(value = "/delete/{id}")
     public void deleteComment(@PathVariable("id") Integer id) throws Exception {
         Comment comment = commentService.getCommentById(id);
         //删除评论
         commentService.deleteComment(id);
-        //删除其子评论
+        /**删除其子评论???迭代器？？？*/
         List<Comment> childCommentList = commentService.listChildComment(id);
         for(int i=0;i<childCommentList.size();i++) {
             commentService.deleteComment(childCommentList.get(i).getCommentId());
@@ -97,7 +97,7 @@ public class BackCommentController {
         articleService.updateCommentCount(article.getArticleId());
     }
 
-    //编辑评论页面显示
+    /** 4 编辑评论页面显示*/
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editCommentView(@PathVariable("id") Integer id) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -110,7 +110,7 @@ public class BackCommentController {
     }
 
 
-    //编辑评论提交
+    /** 5编辑评论提交*/
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
     public String editCommentSubmit(Comment comment) throws Exception {
         commentService.updateComment(comment);
@@ -138,11 +138,11 @@ public class BackCommentController {
         return "redirect:/admin/comment";
     }
 
-    //批准评论
+    /** 7 批准评论*/
     @RequestMapping(value = "/approve/{id}")
     public void approveComment(@PathVariable("id") Integer id) throws Exception {
         Comment comment = commentService.getCommentById(id);
-        //批准评论
+        /**批准评论,把状态进行修改1是批准的，0是不可以用的*/
         comment.setCommentStatus(1);
         commentService.updateComment(comment);
         //批准其子评论
@@ -157,11 +157,11 @@ public class BackCommentController {
         Article article = articleService.getArticleById(null,comment.getCommentArticleId());
         articleService.updateCommentCount(article.getArticleId());
     }
-    //屏蔽评论
+    /** 8 屏蔽评论*/
     @RequestMapping(value = "/hide/{id}")
     public void hideComment(@PathVariable("id") Integer id) throws Exception {
         Comment comment = commentService.getCommentById(id);
-        //屏蔽评论
+        /**屏蔽评论,把状态修改为0就是频闭*/
         comment.setCommentStatus(0);
         commentService.updateComment(comment);
         //屏蔽其子评论
@@ -188,10 +188,10 @@ public class BackCommentController {
         return modelAndView;
     }
 
-    //回复评论提交
+    /** 8回复评论提交*/
     @RequestMapping(value = "/replySubmit",method = RequestMethod.POST)
     public String replyCommentSubmit(HttpServletRequest request,Comment comment) throws Exception {
-        //文章评论数+1
+        /**文章评论数+1，提交后文章的评论数加一*/
         Article article = articleService.getArticleById(null,comment.getCommentArticleId());
         article.setArticleCommentCount(article.getArticleCommentCount()+1);
         articleService.updateArticle(article.getArticleId(),article);

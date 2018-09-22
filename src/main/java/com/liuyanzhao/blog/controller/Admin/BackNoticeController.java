@@ -22,7 +22,7 @@ public class BackNoticeController {
     @Autowired
     private NoticeService noticeService;
 
-    //后台公告列表显示
+    /** 1 后台公告列表显示*/
     @RequestMapping(value = "")
     public ModelAndView index() throws Exception {
         ModelAndView modelandview = new ModelAndView();
@@ -35,7 +35,7 @@ public class BackNoticeController {
 
     }
 
-    //添加公告显示
+    /** 2 添加公告显示*/
     @RequestMapping(value = "/insert")
     public ModelAndView insertNoticeView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -43,7 +43,7 @@ public class BackNoticeController {
        return modelAndView;
     }
 
-    //添加公告提交
+    /** 3 添加公告提交*/
     @RequestMapping(value = "/insertSubmit",method = RequestMethod.POST)
     public String insertNoticeSubmit(Notice notice) throws Exception {
         notice.setNoticeCreateTime(new Date());
@@ -54,7 +54,7 @@ public class BackNoticeController {
         return "redirect:/admin/notice";
     }
 
-    //删除公告
+    /** 4 删除公告*/
     @RequestMapping(value = "/delete/{id}")
     public String deleteNotice(@PathVariable("id") Integer id) throws Exception {
         noticeService.deleteNotice(id);
@@ -62,7 +62,7 @@ public class BackNoticeController {
         return "redirect:/admin/notice";
     }
 
-    //编辑公告页面显示
+    /**  5编辑公告页面显示*/
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editNoticeView(@PathVariable("id") Integer id) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -75,7 +75,7 @@ public class BackNoticeController {
     }
 
 
-    //编辑公告提交
+    /** 6 编辑公告提交,有问题？？？？？？？提交保存没有反应*/
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
     public String editNoticeSubmit(Notice notice) throws Exception {
         notice.setNoticeUpdateTime(new Date());

@@ -18,7 +18,7 @@ public class BackOptionsController {
     private OptionsService optionsService;
 
 
-    //基本信息显示
+    /** 1 基本信息显示*/
     @RequestMapping(value = "")
     public ModelAndView index() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -29,7 +29,7 @@ public class BackOptionsController {
         return modelAndView;
     }
 
-    //编辑基本信息显示
+    /** 2 编辑基本信息显示*/
     @RequestMapping(value = "/edit")
     public ModelAndView editOptionView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -40,10 +40,10 @@ public class BackOptionsController {
         return modelAndView;
     }
 
-    //编辑基本信息提交
+    /** 3 编辑基本信息提交*/
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
     public String editOptionSubmit(Options options) throws Exception {
-        //如果记录不存在，那就新建
+        /**如果记录不存在，那就新建,如果存在就是更新*/
         OptionsCustom optionsCustom = optionsService.getOptions();
         if(optionsCustom.getOptionId()==null) {
             optionsService.insertOptions(options);

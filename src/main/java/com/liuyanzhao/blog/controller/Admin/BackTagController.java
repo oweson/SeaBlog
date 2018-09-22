@@ -1,10 +1,12 @@
 package com.liuyanzhao.blog.controller.Admin;
 
 
+import com.google.common.base.Strings;
 import com.liuyanzhao.blog.entity.Tag;
 import com.liuyanzhao.blog.entity.custom.TagCustom;
 import com.liuyanzhao.blog.service.ArticleService;
 import com.liuyanzhao.blog.service.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +27,15 @@ public class BackTagController {
     @Autowired
     private TagService tagService;
 
-    //后台标签列表显示
+    /**
+     * 1 后台标签列表显示
+     */
     @RequestMapping(value = "")
     public ModelAndView index() throws Exception {
         ModelAndView modelandview = new ModelAndView();
 
         List<TagCustom> tagCustomList = tagService.listTag(null);
-        modelandview.addObject("tagCustomList",tagCustomList);
+        modelandview.addObject("tagCustomList", tagCustomList);
 
         modelandview.setViewName("Admin/Tag/index");
         return modelandview;
@@ -39,19 +43,26 @@ public class BackTagController {
     }
 
 
-    //后台添加分类页面显示
-    @RequestMapping(value = "/insertSubmit",method = RequestMethod.POST)
+    /**
+     * 2 后台添加分类页面显示
+     */
+    @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
     public String insertTagSubmit(Tag tag) throws Exception {
-        tagService.insertTag(tag);
+        if (tag.getTagName().trim().toCharArray().length>0) {
+            tagService.insertTag(tag);
+        }
+
         return "redirect:/admin/tag";
     }
 
-    //删除标签
+    /**
+     * 3 删除标签
+     */
     @RequestMapping(value = "/delete/{id}")
     public String deleteTag(@PathVariable("id") Integer id) throws Exception {
 
-        //禁止删除有文章的分类
-        int count = articleService.countArticleWithTag(null,id);
+        /**禁止删除有文章的分类,如果分类下有文章就不允许删除，直接跳转到tag的首页*/
+        int count = articleService.countArticleWithTag(null, id);
         if (count == 0) {
             tagService.deleteTag(id);
         }
@@ -59,26 +70,38 @@ public class BackTagController {
         return "redirect:/admin/tag";
     }
 
-    //编辑标签页面显示
+    /**
+     * 4 编辑标签页面显示
+     * 需要编辑页面的回显示
+     * 右侧所有页面的显示
+     */
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editTagView(@PathVariable("id") Integer id) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
 
-        TagCustom tagCustom =  tagService.getTagById(id);
-        modelAndView.addObject("tagCustom",tagCustom);
+        TagCustom tagCustom = tagService.getTagById(id);
+        modelAndView.addObject("tagCustom", tagCustom);
 
         List<TagCustom> tagCustomList = tagService.listTag(null);
-        modelAndView.addObject("tagCustomList",tagCustomList);
+        modelAndView.addObject("tagCustomList", tagCustomList);
 
         modelAndView.setViewName("Admin/Tag/edit");
         return modelAndView;
     }
 
 
-    //编辑标签提交
-    @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
+    /**
+     * 5 编辑标签提交
+     * 前台做了字段的判断，没有非空的判断
+     * 可以插入null,这不科学。。。。。。。。。。。。。。。。
+     */
+    @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
     public String editTagSubmit(Tag tag) throws Exception {
-        tagService.updateTag(tag);
+
+        // boolean notEmpty = StringUtils.isNotEmpty(tag.getTagName().trim());
+        if (tag.getTagName().trim().toCharArray().length > 0) {
+            tagService.updateTag(tag);
+        }
         return "redirect:/admin/tag";
     }
 }

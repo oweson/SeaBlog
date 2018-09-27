@@ -36,6 +36,7 @@
                 link_status=#{status}
             </if>
         </where>
+        <!--按照一定的规则进行排序（升序和降序）-->
         ORDER BY link_status ASC,link_order DESC,link_id ASC
     </select>
 

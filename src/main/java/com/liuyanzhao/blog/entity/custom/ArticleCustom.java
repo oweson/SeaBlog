@@ -11,4 +11,5 @@ import com.liuyanzhao.blog.entity.Article;
 public class ArticleCustom extends Article {
 
 
+
 }

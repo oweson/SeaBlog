@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.liuyanzhao.blog.mapper.custom.UserMapperCustom" >
+<mapper namespace="com.liuyanzhao.blog.mapper.custom.UserMapperCustom">
 
     <sql id="user_table_all_columns">
         user_id,
@@ -34,7 +34,9 @@
         <where>
             user_name=#{value} OR user_email=#{value}
         </where>
+        <!--验证用户的状态合法-->
         AND user_status>0
+        <!--limit没有不要，已经邮箱用户名唯一肯定一条数据-->
         limit 1
     </select>
 
@@ -44,6 +46,7 @@
         <include refid="user_table_all_columns"/>
         FROM
         `user`
+        <!--用户名不存传入其他的只返回null-->
         <where>
             user_name=#{value}
         </where>

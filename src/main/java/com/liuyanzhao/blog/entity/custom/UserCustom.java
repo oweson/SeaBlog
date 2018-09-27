@@ -17,4 +17,11 @@ public class UserCustom extends User {
     public void setArticleCount(Integer articleCount) {
         this.articleCount = articleCount;
     }
+
+    @Override
+    public String toString() {
+        return "UserCustom{" +
+                "articleCount=" + articleCount +
+                '}';
+    }
 }

@@ -6,7 +6,7 @@
         category_id,category_pid,category_name,category_description,category_order,category_icon,category_status
     </sql>
 
-    <!--获得分类总数-->
+    <!-- 1 获得分类总数根据状态-->
     <select id="countCategory" resultType="Integer">
         SELECT COUNT(*) FROM `category`
         <where>
@@ -26,6 +26,7 @@
                     category_status=#{status}
                 </if>
         </where>
+        <!--按照三个字段进行升序和降序的排序-->
         order by category_status ASC, category_order desc,category_id asc
     </select>
 

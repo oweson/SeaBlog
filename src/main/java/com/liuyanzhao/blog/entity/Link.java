@@ -112,4 +112,21 @@ public class Link {
     public void setLinkStatus(Integer linkStatus) {
         this.linkStatus = linkStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "linkId=" + linkId +
+                ", linkUrl='" + linkUrl + '\'' +
+                ", linkName='" + linkName + '\'' +
+                ", linkImage='" + linkImage + '\'' +
+                ", linkDescription='" + linkDescription + '\'' +
+                ", linkOwnerNickname='" + linkOwnerNickname + '\'' +
+                ", linkOwnerContact='" + linkOwnerContact + '\'' +
+                ", linkUpdateTime=" + linkUpdateTime +
+                ", linkCreateTime=" + linkCreateTime +
+                ", linkOrder=" + linkOrder +
+                ", linkStatus=" + linkStatus +
+                '}';
+    }
 }

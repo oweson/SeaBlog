@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.liuyanzhao.blog.mapper.custom.TagMapperCustom" >
+<mapper namespace="com.liuyanzhao.blog.mapper.custom.TagMapperCustom">
 
     <sql id="tag_table_all_columns">
         tag_id,
@@ -10,10 +10,10 @@
     </sql>
 
     <!--获得标签列表-->
-    <select id="listTag"  resultType="com.liuyanzhao.blog.entity.custom.TagCustom">
-         SELECT
-         <include refid="tag_table_all_columns"/>
-         FROM `tag`
+    <select id="listTag" resultType="com.liuyanzhao.blog.entity.custom.TagCustom">
+        SELECT
+        <include refid="tag_table_all_columns"/>
+        FROM `tag`
         <where>
             <if test="status!=null">
                 tag_status=#{status}
@@ -23,24 +23,27 @@
     </select>
 
 
-   <select id="listArticleWithTagByPage" resultType="com.liuyanzhao.blog.entity.custom.ArticleCustom">
+    <select id="listArticleWithTagByPage" resultType="com.liuyanzhao.blog.entity.custom.ArticleCustom">
         SELECT
         *
         FROM `article`
-       <where>
-           <if test="status!=null">
-               article_status=#{status} AND
-           </if>
-           article.article_tag_ids = #{tagId} OR
-           article.article_tag_ids LIKE "${tagId},%" OR
-           article.article_tag_ids LIKE "%,${tagId},%" OR
-           article.article_tag_ids LIKE "%,${tagId}"
-           limit #{startPos},#{pageSize}
-       </where>
+        <where>
+            <!--文章的状态1表示可以用-->
+            <if test="status!=null">
+                article_status=#{status} AND
+            </if>
+            <!--模糊查询，前后开头中间包含都被查处-->
+            article.article_tag_ids = #{tagId} OR
+            article.article_tag_ids LIKE "${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId}"
+            limit #{startPos},#{pageSize}
+        </where>
 
     </select>
 
     <!--获得标签总数-->
+    <!---原生的sqlselect count(*) from tag where tag_status=1-->
     <select id="countTag" resultType="Integer">
         SELECT COUNT(*) FROM `tag`
         <where>

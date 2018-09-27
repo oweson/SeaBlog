@@ -17,4 +17,11 @@ public class TagCustom extends Tag {
 	public void setArticleCount(Integer articleCount) {
 		this.articleCount = articleCount;
 	}
+
+	@Override
+	public String toString() {
+		return "TagCustom{" +
+				"articleCount=" + articleCount +
+				'}';
+	}
 }

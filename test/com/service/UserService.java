@@ -1,8 +1,8 @@
 package com.service;
 
 import com.base.BaseClass;
-import com.liuyanzhao.blog.entity.User;
-import com.liuyanzhao.blog.mapper.UserMapper;
+import top.sea521.entity.User;
+import top.sea521.mapper.UserMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.sea521.mapper.custom.TagMapperCustom">
+
+    <sql id="tag_table_all_columns">
+        tag_id,
+        tag_name,
+        tag_description,
+        tag_status
+    </sql>
+
+    <!--获得标签列表-->
+    <select id="listTag" resultType="top.sea521.entity.custom.TagCustom">
+        SELECT
+        <include refid="tag_table_all_columns"/>
+        FROM `tag`
+        <where>
+            <if test="status!=null">
+                tag_status=#{status}
+            </if>
+        </where>
+        ORDER BY tag_status ASC
+    </select>
+
+
+    <select id="listArticleWithTagByPage" resultType="top.sea521.entity.custom.ArticleCustom">
+        SELECT
+        *
+        FROM `article`
+        <where>
+            <!--文章的状态1表示可以用-->
+            <if test="status!=null">
+                article_status=#{status} AND
+            </if>
+            <!--模糊查询，前后开头中间包含都被查处-->
+            article.article_tag_ids = #{tagId} OR
+            article.article_tag_ids LIKE "${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId},%" OR
+            article.article_tag_ids LIKE "%,${tagId}"
+            limit #{startPos},#{pageSize}
+        </where>
+
+    </select>
+
+    <!--获得标签总数-->
+    <!---原生的sqlselect count(*) from tag where tag_status=1-->
+    <select id="countTag" resultType="Integer">
+        SELECT COUNT(*) FROM `tag`
+        <where>
+            <if test="status!=null">
+                tag_status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <!--根据标签名获取标签-->
+    <select id="getTagByName" parameterType="String" resultType="top.sea521.entity.Tag">
+        SELECT
+        <include refid="tag_table_all_columns"/>
+        FROM
+        `tag`
+        WHERE tag_name=#{value}
+        limit 1
+    </select>
+</mapper>
+
+

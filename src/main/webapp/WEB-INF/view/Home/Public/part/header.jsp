@@ -11,6 +11,8 @@
     <nav id="top-header">
         <div class="top-nav">
             <div class="user-login">
+                <!--login can go to bakend-->
+
                 <c:choose>
                     <c:when test="${sessionScope.user==null}">
                         <a href="/admin">登录</a>
@@ -19,6 +21,7 @@
                         <a href="/admin">进入后台</a>
                     </c:otherwise>
                 </c:choose>
+                <span><a href="">regiter</a></span>
             </div>
             <div class="menu-topmenu-container">
                 <ul id="menu-topmenu" class="top-menu">

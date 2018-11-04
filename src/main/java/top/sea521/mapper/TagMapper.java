@@ -1,7 +1,7 @@
 package top.sea521.mapper;
 
 import top.sea521.entity.Tag;
-
+/**标签*/
 public interface TagMapper {
     int deleteByPrimaryKey(Integer tagId);
 

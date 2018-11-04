@@ -1,7 +1,7 @@
 package top.sea521.mapper;
 
 import top.sea521.entity.Link;
-
+/**链接*/
 public interface LinkMapper {
     int deleteByPrimaryKey(Integer linkId);
 

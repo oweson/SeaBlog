@@ -1,7 +1,7 @@
 package top.sea521.mapper;
 
 import top.sea521.entity.Notice;
-
+/**公告*/
 public interface NoticeMapper {
     int deleteByPrimaryKey(Integer noticeId);
 

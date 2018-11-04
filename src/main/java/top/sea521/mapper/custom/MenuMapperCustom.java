@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MenuMapperCustom {
     /**
-     * 获得菜单列表
+     * 1 获得菜单列表
      */
     List<MenuCustom> listMenu(@Param(value = "status") Integer status) throws Exception;
 }

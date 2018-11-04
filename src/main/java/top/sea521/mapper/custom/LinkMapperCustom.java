@@ -5,9 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * Created by 言曌 on 2017/9/4.
- */
+
 public interface LinkMapperCustom {
 
     /**

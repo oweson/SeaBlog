@@ -1,7 +1,7 @@
 package top.sea521.mapper;
 
 import top.sea521.entity.User;
-
+/**用户*/
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userId);
 

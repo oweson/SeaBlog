@@ -2,6 +2,8 @@ package top.sea521.mapper;
 
 import top.sea521.entity.Article;
 
+import java.util.List;
+
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer articleId);
 
@@ -16,4 +18,5 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
+    int deleteBatchByIds(List<Integer> list);
 }

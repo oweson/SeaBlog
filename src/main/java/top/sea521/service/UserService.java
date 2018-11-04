@@ -5,9 +5,7 @@ import top.sea521.entity.custom.UserCustom;
 
 import java.util.List;
 
-/**
- * Created by 言曌 on 2017/8/24.
- */
+
 public interface UserService {
     List<UserCustom> listUser() throws Exception;
 

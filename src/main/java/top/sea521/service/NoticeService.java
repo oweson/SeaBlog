@@ -32,6 +32,6 @@ public interface NoticeService {
      * 5 根据id查询公告
      */
     NoticeCustom getNoticeById(Integer id) throws Exception;
-    //todo 批量的删除公告
+    //todo 批量的删除公告。
 
 }

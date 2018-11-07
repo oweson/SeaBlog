@@ -12,7 +12,7 @@
         menu_status
     </sql>
 
-    <!--获得菜单列表-->
+    <!--1 获得菜单列表-->
     <select id="listMenu"  resultType="top.sea521.entity.custom.MenuCustom">
         SELECT
         <include refid="menu_table_all_columns"/>

@@ -32,12 +32,10 @@ public class BackLinkController {
      */
     @RequestMapping(value = "")
     public ModelAndView linkList() throws Exception {
-        ModelAndView modelandview = new ModelAndView();
-/**查询所有，没有分页bug.....................................*/
+        ModelAndView modelandview = new ModelAndView("Admin/Link/index");
+        /**查询所有，没有分页bug.....................................*/
         List<LinkCustom> linkCustomList = linkService.listLink(null);
         modelandview.addObject("linkCustomList", linkCustomList);
-
-        modelandview.setViewName("Admin/Link/index");
         return modelandview;
 
     }
@@ -48,7 +46,7 @@ public class BackLinkController {
     @RequestMapping(value = "/insert")
     public ModelAndView insertLinkView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-/**跳转到添加页面，右侧显示，已经添加的连接*/
+        /**跳转到添加页面，右侧显示，已经添加的链接*/
         List<LinkCustom> linkCustomList = linkService.listLink(null);
         modelAndView.addObject("linkCustomList", linkCustomList);
 
@@ -74,7 +72,7 @@ public class BackLinkController {
      */
     @RequestMapping(value = "/delete/{id}")
     public String deleteLink(@PathVariable("id") Integer id) throws Exception {
-/**删除连接完毕，跳转到连接的首页面*/
+     /**删除连接完毕，跳转到连接的首页面*/
         linkService.deleteLink(id);
         return "redirect:/admin/link";
     }

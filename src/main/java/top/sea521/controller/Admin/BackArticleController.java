@@ -38,14 +38,14 @@ public class BackArticleController {
     private CategoryService categoryService;
 
     /**
-     * 1后台文章列表显示
+     * 1为后台文章列表显示
      */
     @RequestMapping(value = "")
     public ModelAndView index() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
 
         /**分页显示已发布文章*/
-        Integer pageSize = 20;
+        Integer pageSize = 8;
         List<ArticleListVo> publishedArticleListVoList = articleService.listArticleByPage(1, null, pageSize);
         modelAndView.addObject("publishedArticleListVoList", publishedArticleListVoList);
 
@@ -58,8 +58,9 @@ public class BackArticleController {
 
     /**
      * 2 文章分页显示
-     * pageNow是什么？？？
+     * pageNow是什么开始的页码
      */
+    //todo 有bug!!!待修复......l
     @RequestMapping("/p/{pageNow}")
     public @ResponseBody
     ModelAndView ArticleListByPageView(@PathVariable("pageNow") Integer pageNow) throws Exception {
@@ -76,10 +77,13 @@ public class BackArticleController {
         return modelAndView;
     }
 
-    //后台添加文章页面显示
+    /**
+     * 3 后台添加文章页面显示
+     */
     @RequestMapping(value = "/insert")
     public ModelAndView insertArticleView() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
+        /**发表文章，分类和标签的信息的回显示*/
 
         List<CategoryCustom> categoryCustomList = categoryService.listCategory(1);
         List<TagCustom> tagCustomList = tagService.listTag(1);
@@ -92,7 +96,7 @@ public class BackArticleController {
     }
 
     /**
-     * 3 后台添加文章提交操作
+     * 4 后台添加文章提交操作
      */
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
     public String insertArticleSubmit(Article article) throws Exception {
@@ -102,9 +106,11 @@ public class BackArticleController {
         article.setArticlePostTime(new Date());
         article.setArticleUpdateTime(new Date());
         article.setArticleIsComment(1);
-        article.setArticleViewCount(0);
+        /**为了鼓励用户，默认浏览量2100个！！！*/
+        article.setArticleViewCount(2100);
         article.setArticleLikeCount(0);
         article.setArticleCommentCount(0);
+        /**状态是显示的*/
         article.setArticleStatus(1);
         article.setArticleOrder(1);
 
@@ -126,6 +132,7 @@ public class BackArticleController {
         article.setArticleViewCount(0);
         article.setArticleLikeCount(0);
         article.setArticleCommentCount(0);
+        /**状态有区别！！！发布是1*/
         article.setArticleStatus(0);
         article.setArticleOrder(1);
 
@@ -143,7 +150,7 @@ public class BackArticleController {
     public ModelAndView SearchPageView(HttpServletRequest request, Model model) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         //设置每页显示的数量
-        int pageSize = 20;
+        int pageSize = 10;
         /**query参数？？？*/
         String query = request.getParameter("query");
         List<ArticleSearchVo> articleSearchVoList = articleService.listSearchResultByPage(1, request, model, null, pageSize, query);
@@ -195,7 +202,7 @@ public class BackArticleController {
     }
 
     /**
-     * 8编辑文章页面显示,根据文章的id进行一次回显示
+     * 8 编辑文章页面显示,根据文章的id进行一次回显示
      */
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editArticleView(@PathVariable("id") Integer id) throws Exception {

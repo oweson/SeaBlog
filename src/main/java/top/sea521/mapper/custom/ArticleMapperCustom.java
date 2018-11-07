@@ -39,7 +39,9 @@ public interface ArticleMapperCustom {
      */
     public List<ArticleCustom> listArticleByPage(@Param(value = "status") Integer status, @Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize) throws Exception;
 
-    //文章结果查询结果的数量
+    /**
+     * 7文章结果查询结果的数量
+     */
     public Integer getSearchResultCount(@Param(value = "status") Integer status, @Param(value = "query") String query) throws Exception;
 
     /**

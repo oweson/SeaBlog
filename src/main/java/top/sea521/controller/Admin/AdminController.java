@@ -61,10 +61,10 @@ public class AdminController {
         /**文章列表*/
         List<ArticleListVo> articleCustomList = articleService.listArticle(null);
         modelAndView.addObject("articleCustomList", articleCustomList);
-        //评论列表
+        /**评论列表、*/
         List<CommentListVo> commentListVoList = commentService.listCommentVo(null);
         modelAndView.addObject("commentListVoList", commentListVoList);
-        //评论数
+        /**评论数*/
         Integer allCommentCount = commentService.countComment(null);
         Integer approvedCommentCount = commentService.countComment(1);
         Integer hiddenCommentCount = commentService.countComment(0);
@@ -125,6 +125,7 @@ public class AdminController {
                 response.addCookie(nameCookie);
                 response.addCookie(pwdCookie);
             }
+            /**最近的登录时间和登录的ip*/
             user.setUserLastLoginTime(new Date());
             user.setUserLastLoginIp(getIpAddr(request));
             userService.updateUser(user);

@@ -10,49 +10,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-/**
- * Created by 言曌 on 2017/9/4.
- */
+
 public class LinkServiceImpl implements LinkService {
-	
-	@Autowired
-	private LinkMapperCustom linkMapperCustom;
-	
-	@Autowired
-	private LinkMapper linkMapper;
-	@Override
-	public Integer countLink(Integer status) throws Exception {
-		Integer linkCount = linkMapperCustom.countLink(status);
-		return linkCount;
-	}
-	
-	@Override
-	public List<LinkCustom> listLink(Integer status) throws Exception {
-		List<LinkCustom> linkList = linkMapperCustom.listLink(status);
-		return linkList;
-	}
 
-	@Override
-	public void insertLink(Link link) throws Exception {
-		linkMapper.insertSelective(link);
-	}
+    @Autowired
+    private LinkMapperCustom linkMapperCustom;
 
-	@Override
-	public void deleteLink(Integer id) throws Exception {
-		linkMapper.deleteByPrimaryKey(id);
-	}
+    @Autowired
+    private LinkMapper linkMapper;
 
-	@Override
-	public void updateLink(Link link) throws Exception {
-		linkMapper.updateByPrimaryKeySelective(link);
-	}
+    /**
+     * 1 统计链接
+     */
+    @Override
+    public Integer countLink(Integer status) throws Exception {
+        Integer linkCount = linkMapperCustom.countLink(status);
+        return linkCount;
+    }
 
-	@Override
-	public LinkCustom getLinkById(Integer id) throws Exception {
-		Link link = linkMapper.selectByPrimaryKey(id);
-		LinkCustom linkCustom = new LinkCustom();
-		BeanUtils.copyProperties(link,linkCustom);
-		return linkCustom;
-	}
+    /**
+     * 2 链接的列表
+     */
+    @Override
+    public List<LinkCustom> listLink(Integer status) throws Exception {
+        List<LinkCustom> linkList = linkMapperCustom.listLink(status);
+        return linkList;
+    }
+
+    /**
+     * 3 插入链接
+     */
+    @Override
+    public void insertLink(Link link) throws Exception {
+        linkMapper.insertSelective(link);
+    }
+
+    /**
+     * 4 删除链接
+     */
+    @Override
+    public void deleteLink(Integer id) throws Exception {
+        linkMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 5 更新链接
+     */
+    @Override
+    public void updateLink(Link link) throws Exception {
+        linkMapper.updateByPrimaryKeySelective(link);
+    }
+
+    /**
+     * 6 查寻ById
+     */
+    @Override
+    public LinkCustom getLinkById(Integer id) throws Exception {
+        Link link = linkMapper.selectByPrimaryKey(id);
+        LinkCustom linkCustom = new LinkCustom();
+        BeanUtils.copyProperties(link, linkCustom);
+        return linkCustom;
+    }
 
 }

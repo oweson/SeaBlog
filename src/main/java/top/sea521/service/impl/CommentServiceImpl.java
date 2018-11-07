@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 言曌 on 2017/9/10.
- */
+
 @Service
 public class CommentServiceImpl implements CommentService {
     @Autowired
@@ -37,19 +35,30 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private ArticleMapperCustom articleMapperCustom;
 
+    /**
+     * 1 插入评论
+     */
     @Override
     public void insertComment(HttpServletRequest request, Comment comment) throws Exception {
         String ip = Functions.getIpAddr(request);
+        /**得到访问者的ip一块入库，让不法之徒无法逃匿*/
         comment.setCommentIp(ip);
         commentMapper.insertSelective(comment);
     }
 
+    /**
+     * 2 某一偏文章的评论集合
+     */
     @Override
     public List<CommentCustom> listCommentByArticleId(Integer status, Integer articleId) {
         List<CommentCustom> commentCustomList = commentMapperCustom.listCommentByArticleId(status, articleId);
         return commentCustomList;
     }
 
+    /**
+     * 3 通过id查询评论的集合
+     */
+    //todo 蒙逼
     @Override
     public CommentCustom getCommentById(Integer id) throws Exception {
         CommentCustom commentCustom = new CommentCustom();
@@ -58,6 +67,9 @@ public class CommentServiceImpl implements CommentService {
         return commentCustom;
     }
 
+    /**
+     * 4 分页评论集合
+     */
     @Override
     public List<CommentListVo> listCommentByPage(Integer status, Integer pageNow, Integer pageSize) throws Exception {
         List<CommentListVo> commentListVoList = new ArrayList<CommentListVo>();
@@ -65,7 +77,7 @@ public class CommentServiceImpl implements CommentService {
         List<CommentCustom> commentCustomList = new ArrayList<CommentCustom>();
 
 
-        Page page = null;
+        Page page ;
         int totalCount = commentMapperCustom.countComment(status);
         if (pageNow != null) {
             page = new Page(totalCount, pageNow, pageSize);
@@ -100,6 +112,9 @@ public class CommentServiceImpl implements CommentService {
         return commentListVoList;
     }
 
+    /**
+     * 4 批量集合不分页
+     */
     @Override
     public List<CommentListVo> listCommentVo(Integer status) throws Exception {
         List<CommentListVo> commentListVoList = new ArrayList<CommentListVo>();
@@ -126,28 +141,43 @@ public class CommentServiceImpl implements CommentService {
         return commentListVoList;
     }
 
+    /**
+     * 5 所有的评论
+     */
     @Override
     public List<CommentCustom> listComment(Integer status) throws Exception {
         List<CommentCustom> commentCustomList = commentMapperCustom.listComment(status);
         return commentCustomList;
     }
 
+    /**
+     * 6 删除评论
+     */
     @Override
     public void deleteComment(Integer id) throws Exception {
         commentMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 7 更新评论
+     */
     @Override
     public void updateComment(Comment comment) throws Exception {
         commentMapper.updateByPrimaryKeySelective(comment);
     }
 
+    /**
+     * 8 统计评论的数量
+     */
     @Override
     public Integer countComment(Integer status) throws Exception {
         Integer commentCount = commentMapperCustom.countComment(status);
         return commentCount;
     }
 
+    /**
+     * 9 列举最近的评论集合
+     */
     @Override
     public List<CommentListVo> listRecentComment(Integer limit) throws Exception {
         List<CommentListVo> recentCommentList = new ArrayList<CommentListVo>();
@@ -169,6 +199,9 @@ public class CommentServiceImpl implements CommentService {
         return recentCommentList;
     }
 
+    /**
+     * 10 列出所有的子评论
+     */
     @Override
     public List<Comment> listChildComment(Integer id) throws Exception {
         List<Comment> childCommentList = commentMapperCustom.listChildComment(id);

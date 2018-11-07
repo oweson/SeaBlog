@@ -8,34 +8,41 @@ import top.sea521.service.OptionsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * Created by 言曌 on 2017/9/7.
- */
+
 public class OptionsServiceImpl implements OptionsService {
 
-	@Autowired
-	private OptionsMapperCustom optionsMapperCustom;
+    @Autowired
+    private OptionsMapperCustom optionsMapperCustom;
 
-	@Autowired
-	private OptionsMapper optionsMapper;
+    @Autowired
+    private OptionsMapper optionsMapper;
 
-	@Override
-	public OptionsCustom getOptions() throws Exception {
-		Options options = optionsMapperCustom.getOptions();
-		OptionsCustom optionsCustom = new OptionsCustom();
-		if(options!=null) {
-			BeanUtils.copyProperties(options, optionsCustom);
-		}
-		return optionsCustom;
-	}
+    /**
+     * 1 查
+     */
+    @Override
+    public OptionsCustom getOptions() throws Exception {
+        Options options = optionsMapperCustom.getOptions();
+        OptionsCustom optionsCustom = new OptionsCustom();
+        if (options != null) {
+            BeanUtils.copyProperties(options, optionsCustom);
+        }
+        return optionsCustom;
+    }
 
-	@Override
-	public void insertOptions(Options options) throws Exception {
-		optionsMapper.insertSelective(options);
-	}
+    /**
+     * 2 插
+     */
+    @Override
+    public void insertOptions(Options options) throws Exception {
+        optionsMapper.insertSelective(options);
+    }
 
-	@Override
-	public void updateOptions(Options options) throws Exception {
-		optionsMapper.updateByPrimaryKeySelective(options);
-	}
+    /**
+     * 3 更新
+     */
+    @Override
+    public void updateOptions(Options options) throws Exception {
+        optionsMapper.updateByPrimaryKeySelective(options);
+    }
 }

@@ -72,7 +72,7 @@ public class BackCategoryController {
     }
 
     /**
-     * 4 编辑分类页面显示
+     * 4 编辑分类页面显示;
      */
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editCategoryView(@PathVariable("id") Integer id) throws Exception {
@@ -80,7 +80,7 @@ public class BackCategoryController {
 
         CategoryCustom categoryCustom = categoryService.getCategoryById(null, id);
         modelAndView.addObject("categoryCustom", categoryCustom);
-/**查询所有的父节点，让编辑的时候可以下拉框拉出来*/
+        /**查询所有的父节点，让编辑的时候可以下拉框拉出来*/
         List<CategoryCustom> categoryCustomList = categoryService.listCategory(null);
         modelAndView.addObject("categoryCustomList", categoryCustomList);
 
@@ -94,6 +94,7 @@ public class BackCategoryController {
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
     public String editCategorySubmit(Category category) throws Exception {
         categoryService.updateCategory(category);
+        /**刷新数据*/
         return "redirect:/admin/category";
     }
 }

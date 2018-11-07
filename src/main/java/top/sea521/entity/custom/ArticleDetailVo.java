@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  *  用于封装文章正文详细信息，包括文章内容信息，作者信息，分类和标签信息
- * Created by 言曌 on 2017/9/9.
+ *
  */
 public class ArticleDetailVo {
 	//文章相关信息

@@ -18,33 +18,47 @@ public class NoticeServiceImpl implements NoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
 
-
+    /**
+     * 1 公列列表
+     */
     @Override
     public List<NoticeCustom> listNotice(Integer status) throws Exception {
         List<NoticeCustom> noticeList = noticeMapperCustom.listNotice(status);
         return noticeList;
     }
 
+    /**
+     * 2 插入公告
+     */
     @Override
     public void insertNotice(Notice notice) throws Exception {
         noticeMapper.insertSelective(notice);
     }
 
+    /**
+     * 3 删除公告
+     */
     @Override
     public void deleteNotice(Integer id) throws Exception {
         noticeMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 4 更新公告
+     */
     @Override
     public void updateNotice(Notice notice) throws Exception {
         noticeMapper.updateByPrimaryKeySelective(notice);
     }
 
+    /**
+     * 5 查寻ById
+     */
     @Override
     public NoticeCustom getNoticeById(Integer id) throws Exception {
         Notice notice = noticeMapper.selectByPrimaryKey(id);
         NoticeCustom noticeCustom = new NoticeCustom();
-        BeanUtils.copyProperties(notice,noticeCustom);
+        BeanUtils.copyProperties(notice, noticeCustom);
         return noticeCustom;
     }
 

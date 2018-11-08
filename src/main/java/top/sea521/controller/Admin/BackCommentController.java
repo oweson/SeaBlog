@@ -10,6 +10,7 @@ import top.sea521.entity.Article;
 import top.sea521.entity.Comment;
 import top.sea521.entity.custom.CommentCustom;
 import top.sea521.entity.custom.CommentListVo;
+import top.sea521.enums.PageStatusEnum;
 import top.sea521.service.ArticleService;
 import top.sea521.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,14 @@ public class BackCommentController {
      */
     @RequestMapping(value = "")
     public ModelAndView commentListView() throws Exception {
-        ModelAndView modelandview = new ModelAndView();
-        /**正常评论显示,正常和不长长的区别是状态0表示是正常的，1 是不哭用的*/
-        Integer pageSize = 20;
-        List<CommentListVo> commentListVoList = commentService.listCommentByPage(null, null, pageSize);
+        ModelAndView modelandview = new ModelAndView("Admin/Comment/index");
+        /**正常评论显示,正常和不长长的区别是状态0表示是正常的，1 是不可以用的*/
+        //todo 分页第二页没有效果
+        List<CommentListVo> commentListVoList = commentService.listCommentByPage(null, null, PageStatusEnum.MIN.getCode());
         modelandview.addObject("commentListVoList", commentListVoList);
-
-        //待审核评论不分页显示
+        /**待审核评论不分页显示*/
         List<CommentListVo> hiddenCommentListVoList = commentService.listCommentVo(0);
         modelandview.addObject("hiddenCommentListVoList", hiddenCommentListVoList);
-
-        modelandview.setViewName("Admin/Comment/index");
         return modelandview;
 
     }
@@ -62,17 +60,14 @@ public class BackCommentController {
     //适合RESTful
     public @ResponseBody
     ModelAndView commentListByPageView(@PathVariable("pageNow") Integer pageNow) throws Exception {
-        ModelAndView modelandview = new ModelAndView();
+        ModelAndView modelandview = new ModelAndView("Admin/Comment/index");
         /**全部评论分页显示,bug..........................................................*/
         Integer pageSize = 20;
         List<CommentListVo> commentListVoList = commentService.listCommentByPage(null, pageNow, pageSize);
         modelandview.addObject("commentListVoList", commentListVoList);
-
-        //待审核评论不分页显示
+        /**待审核评论不分页显示*/
         List<CommentListVo> hiddenCommentListVoList = commentService.listCommentVo(0);
         modelandview.addObject("hiddenCommentListVoList", hiddenCommentListVoList);
-
-        modelandview.setViewName("Admin/Comment/index");
         return modelandview;
 
     }
@@ -80,6 +75,7 @@ public class BackCommentController {
     /**
      * 2 添加评论
      */
+    //todo
     @RequestMapping(value = "/insert", method = {RequestMethod.POST})
     @ResponseBody
     public void insertComment(HttpServletRequest request, Comment comment) throws Exception {
@@ -103,9 +99,10 @@ public class BackCommentController {
         /**删除其子评论???迭代器？？？*/
         List<Comment> childCommentList = commentService.listChildComment(id);
         for (int i = 0; i < childCommentList.size(); i++) {
+            //todo 循环删除不好，在mybatis批量的删除
             commentService.deleteComment(childCommentList.get(i).getCommentId());
         }
-        //更新文章的评论数
+        /**更新文章的评论数*/
         Article article = articleService.getArticleById(null, comment.getCommentArticleId());
         articleService.updateCommentCount(article.getArticleId());
     }
@@ -115,36 +112,34 @@ public class BackCommentController {
      */
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editCommentView(@PathVariable("id") Integer id) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-
+        ModelAndView modelAndView = new ModelAndView("Admin/Comment/edit");
         CommentCustom commentCustom = commentService.getCommentById(id);
         modelAndView.addObject("commentCustom", commentCustom);
-
-        modelAndView.setViewName("Admin/Comment/edit");
         return modelAndView;
     }
 
 
     /**
-     * 5编辑评论提交
+     * 5 编辑评论提交
      */
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
     public String editCommentSubmit(Comment comment) throws Exception {
         commentService.updateComment(comment);
         Integer id = comment.getCommentId();
-        //如果是屏蔽评论
+        /**如果是屏蔽评论*/
         if (comment.getCommentStatus() == 0) {
-            //屏蔽其子评论
+            /**屏蔽其子评论*/
             List<Comment> childCommentList = commentService.listChildComment(id);
             for (int i = 0; i < childCommentList.size(); i++) {
                 Comment childComment = childCommentList.get(i);
+                /**设置频闭的状态*/
                 childComment.setCommentStatus(0);
                 commentService.updateComment(childComment);
             }
         }
-        //如果是批准评论
+        /**如果是批准评论*/
         else {
-            //批准其子评论
+            /**批准其子评论*/
             List<Comment> childCommentList = commentService.listChildComment(id);
             for (int i = 0; i < childCommentList.size(); i++) {
                 Comment childComment = childCommentList.get(i);

@@ -14,9 +14,7 @@ import top.sea521.service.TagService;
 
 import java.util.List;
 
-/**
- * Created by 言曌 on 2017/9/2.
- */
+
 @Controller
 public class TagController {
 

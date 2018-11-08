@@ -56,7 +56,7 @@ public class PageController {
     }
 
 
-    //文章归档页面显示
+    /** 2 文章归档页面显示*/
     @RequestMapping(value = "/articleFile")
     public ModelAndView articleFile() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -84,11 +84,10 @@ public class PageController {
         return modelAndView;
     }
 
-    //留言板
+    /** 4 留言板*/
     @RequestMapping(value = "/message")
     public ModelAndView message() throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Home/Page/message");
+        ModelAndView modelAndView = new ModelAndView("Home/Page/message");
         return modelAndView;
     }
 }

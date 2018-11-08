@@ -59,6 +59,7 @@ public class BackUserController {
     /**
      * 3 添加用户的时候校验用户名
      */
+    //todo
     @RequestMapping(value = "/checkUserName", method = RequestMethod.POST)
     @ResponseBody
     public String checkUserName(HttpServletRequest request) throws Exception {
@@ -66,7 +67,7 @@ public class BackUserController {
         String username = request.getParameter("username");
         User user = userService.getUserByName(username);
         int id = Integer.valueOf(request.getParameter("id"));
-        //用户名已存在,但不是当前用户(编辑用户的时候，不提示)
+        /**用户名已存在,但不是当前用户(编辑用户的时候，不提示)*/
         if (user != null) {
             if (user.getUserId() != id) {
                 map.put("code", 1);
@@ -123,7 +124,7 @@ public class BackUserController {
     }
 
     /**
-     * 6删除用户,restful重定向到用户列表页面
+     * 6 删除用户,restful重定向到用户列表页面
      */
     @RequestMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) throws Exception {
@@ -136,19 +137,18 @@ public class BackUserController {
      */
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editUserView(@PathVariable("id") Integer id) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("Admin/User/edit");
 
         UserCustom userCustom = userService.getUserById(id);
         modelAndView.addObject("userCustom", userCustom);
-
-        modelAndView.setViewName("Admin/User/edit");
         return modelAndView;
     }
 
 
     /**
-     * 8编辑用户提交
+     * 8 编辑用户提交
      */
+    //todo 如何校验名字唯一的？
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
     public String editUserSubmit(User user) throws Exception {
         userService.updateUser(user);
@@ -157,16 +157,14 @@ public class BackUserController {
     }
 
     /**
-     * 9基本信息页面显示,查看个人的详细信息显示
+     * 9 基本信息页面显示,查看个人的详细信息显示
      */
     @RequestMapping(value = "/profile/{id}")
     public ModelAndView userProfileView(@PathVariable("id") Integer id) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-/**用户的扩展类*/
+        ModelAndView modelAndView = new ModelAndView("Admin/User/profile");
+        /**用户的扩展类*/
         UserCustom userCustom = userService.getUserById(id);
         modelAndView.addObject("userCustom", userCustom);
-
-        modelAndView.setViewName("Admin/User/profile");
         return modelAndView;
     }
 }

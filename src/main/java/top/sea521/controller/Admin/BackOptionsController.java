@@ -45,7 +45,7 @@ public class BackOptionsController {
         return modelAndView;
     }
 
-    /** 3 编辑基本信息提交*/
+    /** 3 编辑基本信息提交，唯一的*/
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
     public String editOptionSubmit(Options options) throws Exception {
         /**如果记录不存在，那就新建,如果存在就是更新*/

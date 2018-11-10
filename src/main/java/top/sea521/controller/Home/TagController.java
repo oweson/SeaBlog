@@ -18,48 +18,52 @@ import java.util.List;
 @Controller
 public class TagController {
 
-	@Autowired
-	private TagService tagService;
+    @Autowired
+    private TagService tagService;
 
-	@ModelAttribute
-	public void init(Model model) throws Exception {
+    @ModelAttribute
+    public void init(Model model) throws Exception {
 
-	}
-	
-	//根据标签查询文章
-	@RequestMapping("tag/{tagId}")
-	@ResponseBody
-	public ModelAndView ArticleListByTagView(@PathVariable("tagId") Integer tagId) throws Exception {
-		ModelAndView modelAndView = new ModelAndView();
-		//设置每页显示条数、
-		int pageSize = 10;
-		List<ArticleListVo> articleListVoList = tagService.getArticleListByPage(1,null,pageSize,tagId);
+    }
 
-		modelAndView.addObject("articleListVoList",articleListVoList);
+    /**
+     * 1 根据标签查询文章
+     */
+    @RequestMapping("tag/{tagId}")
+    @ResponseBody
+    public ModelAndView ArticleListByTagView(@PathVariable("tagId") Integer tagId) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        //设置每页显示条数、
+        int pageSize = 10;
+        List<ArticleListVo> articleListVoList = tagService.getArticleListByPage(1, null, pageSize, tagId);
 
-		//标签信息
-		TagCustom tagCustom = tagService.getTagById(tagId);
-		modelAndView.addObject("tagCustom",tagCustom);
+        modelAndView.addObject("articleListVoList", articleListVoList);
 
-		modelAndView.setViewName("Home/Page/articleListByTag");
-		return modelAndView;
-	}
-	
-	//根据标签查询文章分页
-	@RequestMapping("tag/{tagId}/p/{pageNow}")
-	@ResponseBody
-	public  ModelAndView ArticleListByTagAndPageView(@PathVariable("pageNow") Integer pageNow,@PathVariable("tagId") Integer tagId) throws Exception {
-		ModelAndView modelAndView = new ModelAndView();
-		
-		//设置每页显示条数
-		int pageSize = 10;
-		List<ArticleListVo> articleListVoList = tagService.getArticleListByPage(1,pageNow,pageSize,tagId);
-		modelAndView.addObject("articleListVoList",articleListVoList);
-		modelAndView.setViewName("Home/Page/articleListByTag");
-		//标签信息
-		TagCustom tagCustom = tagService.getTagById(tagId);
-		modelAndView.addObject("tagCustom",tagCustom);
-		
-		return modelAndView;
-	}
+        /**标签信息*/
+        TagCustom tagCustom = tagService.getTagById(tagId);
+        modelAndView.addObject("tagCustom", tagCustom);
+
+        modelAndView.setViewName("Home/Page/articleListByTag");
+        return modelAndView;
+    }
+
+    /**
+     * 2 根据标签查询文章分页
+     */
+    @RequestMapping("tag/{tagId}/p/{pageNow}")
+    @ResponseBody
+    public ModelAndView ArticleListByTagAndPageView(@PathVariable("pageNow") Integer pageNow, @PathVariable("tagId") Integer tagId) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+
+        /**设置每页显示条数*/
+        int pageSize = 10;
+        List<ArticleListVo> articleListVoList = tagService.getArticleListByPage(1, pageNow, pageSize, tagId);
+        modelAndView.addObject("articleListVoList", articleListVoList);
+        modelAndView.setViewName("Home/Page/articleListByTag");
+        /**标签信息*/
+        TagCustom tagCustom = tagService.getTagById(tagId);
+        modelAndView.addObject("tagCustom", tagCustom);
+
+        return modelAndView;
+    }
 }

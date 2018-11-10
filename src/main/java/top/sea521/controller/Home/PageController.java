@@ -40,7 +40,7 @@ public class PageController {
 
     }
 
-    //页面显示
+    /** 1 页面显示*/
     @RequestMapping(value = "/{key}")
     public ModelAndView ArticleDetailView(@PathVariable("key") String key) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
@@ -66,7 +66,7 @@ public class PageController {
         return modelAndView;
     }
 
-    //站点地图显示
+    /** 3 站点地图显示*/
     @RequestMapping(value = "/map")
     public ModelAndView siteMap() throws Exception {
         ModelAndView modelAndView = new ModelAndView();

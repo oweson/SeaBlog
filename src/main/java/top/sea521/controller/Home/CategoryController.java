@@ -39,7 +39,7 @@ public class CategoryController {
     @RequestMapping("/category/{cateId}")
     @ResponseBody
     public ModelAndView ArticleListByCategoryView(@PathVariable("cateId") Integer cateId) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("Home/Page/articleListByCategory");
         //设置每页显示条数
         int pageSize = 10;
         List<ArticleListVo> articleListVoList = categoryService.listArticleWithCategoryByPage(1, null, pageSize, cateId);
@@ -50,8 +50,6 @@ public class CategoryController {
         //该分类信息
         CategoryCustom categoryCustom = categoryService.getCategoryById(1, cateId);
         modelAndView.addObject("categoryCustom", categoryCustom);
-
-        modelAndView.setViewName("Home/Page/articleListByCategory");
         return modelAndView;
     }
 

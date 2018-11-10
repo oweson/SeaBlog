@@ -27,16 +27,14 @@ public class CommentController {
 	@Autowired
 	private ArticleService articleService;
 	
-	//添加评论
+	/** 1 添加评论*/
 	@RequestMapping(value = "/comment/insert",method = {RequestMethod.POST})
 	@ResponseBody
 	public void insertComment(HttpServletRequest request,Comment comment) throws Exception {
 		//添加评论
-
-
 		comment.setCommentCreateTime(new Date());
 		commentService.insertComment(request,comment);
-		//更新文章的评论数
+		/**更新文章的评论数*/
 		Article article = articleService.getArticleById(null,comment.getCommentArticleId());
 		articleService.updateCommentCount(article.getArticleId());
 	}

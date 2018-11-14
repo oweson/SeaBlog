@@ -4,6 +4,28 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>ForestBlog</display-name>
+  <!-- 9 找不到文件的跳转页面-->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/error/404.html</location>
+  </error-page>
+  <!-- 10 内部服务错误的跳转页面-->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/error/500.html</location>
+
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/error/403.html</location>
+
+  </error-page>
+  <error-page>
+    <error-code>400</error-code>
+    <location>/WEB-INF/error/400.html</location>
+
+  </error-page>
+  <!--11 http请求 405错误 方法不被允许 (Method not allowed)-->
 
   <!--post乱码过滤器-->
   <!-- 配置springMVC编码过滤器 -->

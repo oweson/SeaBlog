@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date：2018/9/21 0021 16:07
  */
 @Component
-/**不是业务层，dao,controlleern模糊不清，就用componnet*/
+/**不是业务层，dao,controller模糊不清，就用componnet*/
 public class ExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

@@ -6,6 +6,9 @@ package top.sea521.enums;
  * @Date：2018/11/7 0007 22:46
  */
 public enum PageStatusEnum {
+    /**
+     * 页面枚举类信息
+     */
     MAX(20, "20size"), MIDDLE(0, "15size"), MIN(10, "10size");
     private Integer code;
     private String desc;
@@ -19,15 +22,10 @@ public enum PageStatusEnum {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
 
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+
 }

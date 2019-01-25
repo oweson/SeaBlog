@@ -88,7 +88,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByNameOrEmail(String str) throws Exception {
         User user = userMapperCustom.getUserByNameOrEmail(str);
-        return user;
+        if (user != null) {
+            return user;
+        }
+        return null;
     }
 
     /**
@@ -96,8 +99,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserByName(String name) throws Exception {
-        User user = userMapperCustom.getUserByName(name);
-        return user;
+
+        return userMapperCustom.getUserByName(name);
+
     }
 
     /**
@@ -105,8 +109,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserByEmail(String email) throws Exception {
-        User user = userMapperCustom.getUserByEmail(email);
-        return user;
+        return userMapperCustom.getUserByEmail(email);
     }
 
 

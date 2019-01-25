@@ -1,13 +1,16 @@
 package top.sea521.enums;
 
+import lombok.Getter;
+
 /**
  * the class is create by @Author:oweson
  *
  * @Date：2018/11/7 0007 22:46
  */
+@Getter
 public enum MenuStatusEnum {
     /**
-     * 菜单的枚举信息；
+     * 1 菜单的枚举信息；
      * 不提供set fun 防止外部修改枚举的信息；
      */
 
@@ -18,18 +21,6 @@ public enum MenuStatusEnum {
     MenuStatusEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-   /* public void setCode(Integer code) {
-        this.code = code;
-    }*/
-
-    public String getDesc() {
-        return desc;
     }
 
 

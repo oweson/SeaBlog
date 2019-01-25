@@ -1,10 +1,13 @@
 package top.sea521.enums;
 
+import lombok.Getter;
+
 /**
  * the class is create by @Author:oweson
  *
  * @Date：2018/11/7 0007 22:46
  */
+@Getter
 public enum NoticeStatusEnum {
     /**
      * 公告枚举类信息
@@ -18,14 +21,7 @@ public enum NoticeStatusEnum {
         this.desc = desc;
     }
 
-    public Integer getCode() {
-        return code;
-    }
 
-
-    public String getDesc() {
-        return desc;
-    }
 
 
 }

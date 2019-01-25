@@ -124,7 +124,7 @@ public class TagServiceImpl implements TagService {
     }
 
     /**
-     * 5 格局标签的id获得标签的信息
+     * 5 根据标签的id获得标签的信息
      */
     @Override
     public TagCustom getTagById(Integer id) throws Exception {
@@ -142,7 +142,7 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     public void insertTag(Tag tag) throws Exception {
-        //todo 不会插入成功，但是没有提示....
+        //todo 如果重复，不会插入成功，但是没有提示....
         /**标签名是唯一的；*/
         Tag tagByName = tagMapperCustom.getTagByName(tag.getTagName());
         if (tagByName != null) {
